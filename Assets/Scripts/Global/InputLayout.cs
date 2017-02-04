@@ -8,14 +8,14 @@
 	public readonly int ButtonX = 2;
 	public readonly int ButtonY = 3;
 
-	public readonly int ButtonShoulderL = 4;
-	public readonly int ButtonShoulderR = 5;
+	public readonly int ButtonL = 4;
+	public readonly int ButtonR = 5;
 
 	public readonly int ButtonBack = 6;
 	public readonly int ButtonStart = 7;
 
-	public readonly int ButtonJoystickL = 8;
-	public readonly int ButtonJoystickR = 9;
+	public readonly int ButtonStickL = 8;
+	public readonly int ButtonStickR = 9;
 
 	public readonly int AxisRightX = 4;
 	public readonly int AxisRightY = 5;
@@ -26,10 +26,10 @@
 	public readonly int AxisTriggerLeft = 9;
 	public readonly int AxisTriggerRight = 10;
 
-	public readonly int ButtonPadUp = 11;
-	public readonly int ButtonPadDown = 12;
-	public readonly int ButtonPadLeft = 13;
-	public readonly int ButtonPadRight = 14;
+	public readonly int ButtonUp = 11;
+	public readonly int ButtonDown = 12;
+	public readonly int ButtonLeft = 13;
+	public readonly int ButtonRight = 14;
 }
 
 public class WindowsLayout : InputLayout

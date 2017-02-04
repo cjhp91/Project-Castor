@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Castor
 {
-	public class BattleManager : MonoBehaviour, IGameMode
+	public class BattleManager : MonoBehaviour, IGameMode, IInputHandler
 	{
 		#region MEMBERS
 		public static BattleManager Instance;
@@ -33,6 +33,10 @@ namespace Castor
 			_stageObject.transform.localPosition = Vector3.zero;
 			_stageObject.SetActive(false);
 
+			if (InputManager.Instance != null) {
+				InputManager.Instance.AssignInputHandler (this);
+			}
+
 			CameraController.Instance.ShowFader ();
 		}
 		public void Ready()
@@ -57,27 +61,37 @@ namespace Castor
 		#endregion
 
 		#region INPUT
-		private void ReceiveButtonDownInput(int player, int button)
+		public void ReceiveButtonDownInput(int player, int button)
 		{
+			Logger.Highlight (player + ": " + button, "BUTTON DOWN");
+
 			if (_carsList.ContainsKey (player))
 				_carsList [player].ReceiveButtonDownInput (button);
 			else if (button == 7) // start
 				CreateCar(player);
 		}
-		private void ReceiveButtonHoldInput(int player, int button)
+		public void ReceiveButtonHoldInput(int player, int button)
 		{
+			Logger.Highlight (player + ": " + button, "BUTTON HOLD");
+
 			if (_carsList.ContainsKey (player))
 				_carsList [player].ReceiveButtonHoldInput (button);
 		}
 
-		private void ReceiveButtonUpInput(int player, int button)
+		public void ReceiveButtonUpInput(int player, int button)
 		{
+			Logger.Highlight (player + ": " + button, "BUTTON UP");
+
 			if (_carsList.ContainsKey (player))
 				_carsList [player].ReceiveButtonUpInput (button);
 		}
 
-		private void ReceiveAxisInput(int player, int axis, int amount)
+		public void ReceiveAxisInput(int player, int axis, int amount)
 		{
+			if (System.Math.Abs(amount) < AXIS_DEAD_ZONE)
+				return;
+			Logger.Highlight (player + ": " + axis + " - " + amount, "AXIS");
+
 			if (_carsList.ContainsKey (player))
 				_carsList [player].ReceiveAxisInput (axis,amount);
 		}

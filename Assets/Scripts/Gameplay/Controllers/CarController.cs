@@ -24,22 +24,21 @@ namespace Castor
 		}
 		#endregion
 
+		#region UPDATE
+		#endregion
+
 		#region INPUT
 		public void ReceiveButtonDownInput(int button)
 		{
-//			Logger.Highlight (CarID + ": " + button, "INPUT");
 		}
 		public void ReceiveButtonHoldInput(int button)
 		{
-//			Logger.Error (CarID + ": " + button, "INPUT");
 		}
 		public void ReceiveButtonUpInput(int button)
 		{
-//			Logger.Warning (CarID + ": " + button, "INPUT");
 		}
 		public void ReceiveAxisInput(int axis, int amount)
 		{
-//			Logger.Caution (CarID + ": " + axis + " - " + amount, "INPUT");
 		}
 		#endregion
 

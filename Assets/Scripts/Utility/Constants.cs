@@ -18,29 +18,32 @@
 		}
 		public static class Input
 		{
-			public const int ButtonA = 0;
-			public const int ButtonB = 0;
-			public const int ButtonX = 0;
-			public const int ButtonY = 0;
-			public const int ButtonL = 0;
-			public const int ButtonR = 0;
-			public const int ButtonBack = 0;
-			public const int ButtonStart = 0;
-			public const int ButtonUp = 0;
-			public const int ButtonDown = 0;
-			public const int ButtonLeft = 0;
-			public const int ButtonRight = 0;
-			public const int ButtonStickL = 0;
-			public const int ButtonStickR = 0;
+			public const int COUNT_BUTTON = 14;
+			public const int COUNT_AXIS = 8;
 
-			public const int AxisLeftX = 0;
-			public const int AxisLeftY = 0;
-			public const int AxisRightX = 0;
-			public const int AxisRightY = 0;
-			public const int AxisTriggerLeft = 0;
-			public const int AxisTriggerRight = 0;
-			public const int PadX = 0;
-			public const int PadY = 0;
+			public const int BUTTON_A = 0;
+			public const int BUTTON_B = 1;
+			public const int BUTTON_X = 2;
+			public const int BUTTON_Y = 3;
+			public const int BUTTON_L = 4;
+			public const int BUTTON_R = 5;
+			public const int BUTTON_BACK = 6;
+			public const int BUTTON_START = 7;
+			public const int BUTTON_UP = 8;
+			public const int BUTTON_DOWN = 9;
+			public const int BUTTON_LEFT = 10;
+			public const int BUTTON_RIGHT = 11;
+			public const int BUTTON_STICK_L = 12;
+			public const int BUTTON_STICK_R = 13;
+
+			public const int AXIS_LEFT_X = 0;
+			public const int AXIS_LEFT_Y = 1;
+			public const int AXIS_RIGHT_X = 2;
+			public const int AXIS_RIGHT_Y = 3;
+			public const int AXIS_TRIGGER_LEFT = 4;
+			public const int AXIS_TRIGGER_RIGHT = 5;
+			public const int PAD_X = 6;
+			public const int PAD_Y = 7;
 		}
 	}
 	public static class Gameplay

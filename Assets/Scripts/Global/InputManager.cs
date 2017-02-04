@@ -10,6 +10,9 @@ namespace Castor
 		private InputLayout CurrentLayout = new WindowsLayout();
 
 		private int _gamepadCount = 0;
+		private Dictionary<int,string> _buttonDatabase = new Dictionary<int, string>();
+		private Dictionary<int,string> _axisDatabase = new Dictionary<int, string>();
+		private const int MAX_PLAYER_COUNT = 4;
 
 		private void Start()
 		{
@@ -22,10 +25,32 @@ namespace Castor
 			#endif
 
 			_gamepadCount = Input.GetJoystickNames ().Length;
+			BuildInputDatabase ();
 		}
 		private void BuildInputDatabase()
 		{
+			if (_buttonDatabase.Count < 1) {
+				for (int i = 0; i < MAX_PLAYER_COUNT; i++) {
+					for (int j = 0; j < Constants.Input.COUNT_BUTTON; j++) {
+						_buttonDatabase.Add (i * Constants.Input.COUNT_BUTTON + j, "joystick " + (i+1) + " button " + j);
+						Logger.Highlight ("joystick " + (i+1) + " button " + j, "Input Database");
+					}
+				}
+			}
+			if (_axisDatabase.Count < 1) {
+				for (int i = 0; i < MAX_PLAYER_COUNT; i++) {
+					for (int j = 1; j <= Constants.Input.COUNT_AXIS; j++) {
+						_axisDatabase.Add (i * Constants.Input.COUNT_AXIS + j, "joystick " + (i+1) + " axis " + j);
+						Logger.Highlight ("joystick " + (i+1) + " axis " + j, "Input Database");
+					}
+				}
+			}
 		}
+
+		public void AssignInputHandler(IInputHandler handler) {
+			InputHandler = handler;
+		}
+
 		private void Update()
 		{
 			if (InputHandler != null) {
@@ -35,121 +60,129 @@ namespace Castor
 				}
 				for (int i = 1; i <= _gamepadCount; i++) {
 					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonA)))
-						InputHandler.ReceiveButtonDownInput (i,0);
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_A);
 					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonB)))
-						InputHandler.ReceiveButtonDownInput (i,1);
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_B);
 					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonX)))
-						InputHandler.ReceiveButtonDownInput (i,2);
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_X);
 					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonY)))
-						InputHandler.ReceiveButtonDownInput (i,3);
-					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonShoulderL)))
-						InputHandler.ReceiveButtonDownInput (i,4);
-					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonShoulderR)))
-						InputHandler.ReceiveButtonDownInput (i,5);
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_Y);
+					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonL)))
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_L);
+					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonR)))
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_R);
 					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonBack)))
-						InputHandler.ReceiveButtonDownInput (i,6);
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_BACK);
 					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonStart)))
-						InputHandler.ReceiveButtonDownInput (i,7);
-					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonPadUp)))
-						InputHandler.ReceiveButtonDownInput (i,8);
-					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonPadDown)))
-						InputHandler.ReceiveButtonDownInput (i,9);
-					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonPadLeft)))
-						InputHandler.ReceiveButtonDownInput (i,10);
-					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonPadRight)))
-						InputHandler.ReceiveButtonDownInput (i,11);
-					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonJoystickL)))
-						InputHandler.ReceiveButtonDownInput (i,12);
-					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonJoystickR)))
-						InputHandler.ReceiveButtonDownInput (i,13);
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_START);
+					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonUp)))
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_UP);
+					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonDown)))
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_DOWN);
+					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonLeft)))
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_LEFT);
+					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonRight)))
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_RIGHT);
+					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonStickL)))
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_STICK_L);
+					if (Input.GetKeyDown (InputButton(i,CurrentLayout.ButtonStickR)))
+						InputHandler.ReceiveButtonDownInput (i,Constants.Input.BUTTON_STICK_R);
 
 					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonA)))
-						InputHandler.ReceiveButtonUpInput (i,0);
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_A);
 					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonB)))
-						InputHandler.ReceiveButtonUpInput (i,1);
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_B);
 					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonX)))
-						InputHandler.ReceiveButtonUpInput (i,2);
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_X);
 					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonY)))
-						InputHandler.ReceiveButtonUpInput (i,3);
-					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonShoulderL)))
-						InputHandler.ReceiveButtonUpInput (i,4);
-					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonShoulderR)))
-						InputHandler.ReceiveButtonUpInput (i,5);
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_Y);
+					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonL)))
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_L);
+					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonR)))
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_R);
 					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonBack)))
-						InputHandler.ReceiveButtonUpInput (i,6);
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_BACK);
 					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonStart)))
-						InputHandler.ReceiveButtonUpInput (i,7);
-					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonPadUp)))
-						InputHandler.ReceiveButtonUpInput (i,8);
-					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonPadDown)))
-						InputHandler.ReceiveButtonUpInput (i,9);
-					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonPadLeft)))
-						InputHandler.ReceiveButtonUpInput (i,10);
-					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonPadRight)))
-						InputHandler.ReceiveButtonUpInput (i,11);
-					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonJoystickL)))
-						InputHandler.ReceiveButtonUpInput (i,12);
-					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonJoystickR)))
-						InputHandler.ReceiveButtonUpInput (i,13);
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_START);
+					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonUp)))
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_UP);
+					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonDown)))
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_DOWN);
+					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonLeft)))
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_LEFT);
+					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonRight)))
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_RIGHT);
+					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonStickL)))
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_STICK_L);
+					if (Input.GetKeyUp (InputButton(i,CurrentLayout.ButtonStickR)))
+						InputHandler.ReceiveButtonUpInput (i,Constants.Input.BUTTON_STICK_R);
 
 					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonA)))
-						InputHandler.ReceiveButtonHoldInput (i,0);
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_A);
 					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonB)))
-						InputHandler.ReceiveButtonHoldInput (i,1);
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_B);
 					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonX)))
-						InputHandler.ReceiveButtonHoldInput (i,2);
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_X);
 					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonY)))
-						InputHandler.ReceiveButtonHoldInput (i,3);
-					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonShoulderL)))
-						InputHandler.ReceiveButtonHoldInput (i,4);
-					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonShoulderR)))
-						InputHandler.ReceiveButtonHoldInput (i,5);
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_Y);
+					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonL)))
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_L);
+					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonR)))
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_R);
 					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonBack)))
-						InputHandler.ReceiveButtonHoldInput (i,6);
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_BACK);
 					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonStart)))
-						InputHandler.ReceiveButtonHoldInput (i,7);
-					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonPadUp)))
-						InputHandler.ReceiveButtonHoldInput (i,8);
-					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonPadDown)))
-						InputHandler.ReceiveButtonHoldInput (i,9);
-					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonPadLeft)))
-						InputHandler.ReceiveButtonHoldInput (i,10);
-					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonPadRight)))
-						InputHandler.ReceiveButtonHoldInput (i,11);
-					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonJoystickL)))
-						InputHandler.ReceiveButtonHoldInput (i,12);
-					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonJoystickR)))
-						InputHandler.ReceiveButtonHoldInput (i,13);
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_START);
+					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonUp)))
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_UP);
+					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonDown)))
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_DOWN);
+					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonLeft)))
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_LEFT);
+					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonRight)))
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_RIGHT);
+					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonStickL)))
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_STICK_L);
+					if (Input.GetKey (InputButton(i,CurrentLayout.ButtonStickR)))
+						InputHandler.ReceiveButtonHoldInput (i,Constants.Input.BUTTON_STICK_R);
 
 					float axis = 0.0f;
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisLeftX));
-					InputHandler.ReceiveAxisInput (i,0,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_LEFT_X,(int)axis * 10000);
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisLeftY));
-					InputHandler.ReceiveAxisInput (i,1,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_LEFT_Y,(int)axis * 10000);
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisRightX));
-					InputHandler.ReceiveAxisInput (i,2,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_RIGHT_X,(int)axis * 10000);
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisRightY));
-					InputHandler.ReceiveAxisInput (i,3,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_RIGHT_Y,(int)axis * 10000);
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisTriggerLeft));
-					InputHandler.ReceiveAxisInput (i,4,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_TRIGGER_LEFT,(int)axis * 10000);
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisTriggerRight));
-					InputHandler.ReceiveAxisInput (i,5,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_TRIGGER_RIGHT,(int)axis * 10000);
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.PadX));
-					InputHandler.ReceiveAxisInput (i,6,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.PAD_X,(int)axis * 10000);
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.PadY));
-					InputHandler.ReceiveAxisInput (i,7,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.PAD_Y,(int)axis * 10000);
 				}
 			}
 				
 		}
 
-		private static string InputButton(int player, int button)
+		private string InputButton(int player, int button)
 		{
+			int index = (player - 1) * Constants.Input.COUNT_BUTTON + button;
+			if (_buttonDatabase.ContainsKey (index)) {
+				return _buttonDatabase[index];
+			}
 			return "joystick " + player + " button " + button;
 		}
 
-		private static string InputAxis(int player, int axis)
+		private string InputAxis(int player, int axis)
 		{
+			int index = (player - 1) * Constants.Input.COUNT_BUTTON + axis;
+			if (_axisDatabase.ContainsKey (index)) {
+				return _axisDatabase[index];
+			}
 			return "joystick " + player + " axis " + axis;
 		}
 	}
