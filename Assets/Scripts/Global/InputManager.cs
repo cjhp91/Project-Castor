@@ -13,6 +13,7 @@ namespace Castor
 		private Dictionary<int,string> _buttonDatabase = new Dictionary<int, string>();
 		private Dictionary<int,string> _axisDatabase = new Dictionary<int, string>();
 		private const int MAX_PLAYER_COUNT = 4;
+		private const int AXIS_MULTIPLIER = 1000;
 
 		private void Start()
 		{
@@ -148,21 +149,21 @@ namespace Castor
 
 					float axis = 0.0f;
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisLeftX));
-					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_LEFT_X,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_LEFT_X,(int)(axis * AXIS_MULTIPLIER));
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisLeftY));
-					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_LEFT_Y,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_LEFT_Y,(int)(axis * AXIS_MULTIPLIER));
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisRightX));
-					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_RIGHT_X,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_RIGHT_X,(int)(axis * AXIS_MULTIPLIER));
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisRightY));
-					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_RIGHT_Y,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_RIGHT_Y,(int)(axis * AXIS_MULTIPLIER));
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisTriggerLeft));
-					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_TRIGGER_LEFT,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_TRIGGER_LEFT,(int)(axis * AXIS_MULTIPLIER));
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.AxisTriggerRight));
-					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_TRIGGER_RIGHT,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.AXIS_TRIGGER_RIGHT,(int)(axis * AXIS_MULTIPLIER));
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.PadX));
-					InputHandler.ReceiveAxisInput (i,Constants.Input.PAD_X,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.PAD_X,(int)(axis * AXIS_MULTIPLIER));
 					axis = Input.GetAxis (InputAxis (i, CurrentLayout.PadY));
-					InputHandler.ReceiveAxisInput (i,Constants.Input.PAD_Y,(int)axis * 10000);
+					InputHandler.ReceiveAxisInput (i,Constants.Input.PAD_Y,(int)(axis * AXIS_MULTIPLIER));
 				}
 			}
 				

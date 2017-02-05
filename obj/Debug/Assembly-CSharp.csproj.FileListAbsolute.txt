@@ -55,3 +55,8 @@ D:\Projects\Project-Castor\Project-Castor\Temp\bin\Debug\UnityEngine.HoloLens.xm
 D:\Projects\Project-Castor\Project-Castor\Temp\bin\Debug\UnityEngine.VR.xml
 D:\Projects\Project-Castor\Project-Castor\obj\Debug\Assembly-CSharp.dll
 D:\Projects\Project-Castor\Project-Castor\obj\Debug\Assembly-CSharp.pdb
+D:\Projects\Project-Castor\Project-Castor\Temp\bin\Debug\UnityEngine.Advertisements.dll
+D:\Projects\Project-Castor\Project-Castor\Temp\bin\Debug\UnityEngine.Purchasing.dll
+D:\Projects\Project-Castor\Project-Castor\Temp\bin\Debug\UnityEngine.Advertisements.xml
+D:\Projects\Project-Castor\Project-Castor\Temp\bin\Debug\UnityEngine.Purchasing.xml
+D:\Projects\Project-Castor\Project-Castor\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
