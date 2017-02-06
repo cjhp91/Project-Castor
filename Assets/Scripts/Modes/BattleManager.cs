@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using InControl;
 
 namespace Castor
 {
-	public class BattleManager : MonoBehaviour, IGameMode, IInputHandler
+	public class BattleManager : MonoBehaviour, IGameMode
 	{
 		#region MEMBERS
 		public static BattleManager Instance;
-		private Dictionary<int,CarController> _carsList = new Dictionary<int, CarController>();
+		private Dictionary<int,CarController> _carList = new Dictionary<int, CarController>();
+		private Dictionary<InputDevice,int> _deviceBinding = new Dictionary<InputDevice,int> ();
 
 
 		private GameObject _stageObject;
-		private const int AXIS_DEAD_ZONE = 100;
 		#endregion
 
 		#region INITIALIZATION
@@ -33,10 +34,10 @@ namespace Castor
 			_stageObject.transform.localPosition = Vector3.zero;
 			_stageObject.SetActive(false);
 
-			if (InputManager.Instance != null) {
-				InputManager.Instance.AssignInputHandler (this);
-			}
-
+//			if (InputManager.Instance != null) {
+//				InputManager.Instance.AssignInputHandler (this);
+//			}
+//
 			CameraController.Instance.ShowFader ();
 		}
 		public void Ready()
@@ -50,50 +51,45 @@ namespace Castor
 		}
 		#endregion
 
-		#region CAR MANAGEMENT
-		private void CreateCar(int player)
+		#region UPDATE
+		private void Update()
 		{
-			CarController newCar = new CarController ();
-			newCar.Init (player);
-			_carsList.Add (player,newCar);
-			Logger.Highlight ("Player " + player + " Created", "CAR MANAGER");
+			for (int i = 0; i < InputManager.Devices.Count; i++) {
+				InputDevice device = InputManager.Devices [i];
+				if (_deviceBinding.ContainsKey (device)) {
+					int playerId = _deviceBinding [device];
+					if (_carList.ContainsKey (playerId)) {
+						_carList [playerId].ReceiveDevice (device);
+					} else {
+						Logger.Error ("Binding Lost: " + device.Name);
+					}
+				} else {
+					if (device.Action1) {
+						CreateCar (device);
+					}
+				}
+			}
 		}
 		#endregion
 
-		#region INPUT
-		public void ReceiveButtonDownInput(int player, int button)
+		#region CAR MANAGEMENT
+		private void CreateCar(InputDevice device)
 		{
-			Logger.Highlight (player + ": " + button, "BUTTON DOWN");
+			int playerID = _deviceBinding.Count + 1;
 
-			if (_carsList.ContainsKey (player))
-				_carsList [player].ReceiveButtonDownInput (button);
-			else if (button == 7) // start
-				CreateCar(player);
-		}
-		public void ReceiveButtonHoldInput(int player, int button)
-		{
-			Logger.Highlight (player + ": " + button, "BUTTON HOLD");
 
-			if (_carsList.ContainsKey (player))
-				_carsList [player].ReceiveButtonHoldInput (button);
-		}
+			_deviceBinding.Add (device, playerID);
 
-		public void ReceiveButtonUpInput(int player, int button)
-		{
-			Logger.Highlight (player + ": " + button, "BUTTON UP");
-
-			if (_carsList.ContainsKey (player))
-				_carsList [player].ReceiveButtonUpInput (button);
-		}
-
-		public void ReceiveAxisInput(int player, int axis, int amount)
-		{
-			if (System.Math.Abs(amount) < AXIS_DEAD_ZONE)
-				return;
-			Logger.Highlight (player + ": " + axis + " - " + amount, "AXIS");
-
-			if (_carsList.ContainsKey (player))
-				_carsList [player].ReceiveAxisInput (axis,amount);
+			string prefab = Constants.Prefabs.PREFAB_CAR_BLUE;
+			if (playerID % 2 == 0)
+				prefab = Constants.Prefabs.PREFAB_CAR_ORANGE;
+			
+			GameObject newCarGo = Instantiate(Resources.Load (prefab)) as GameObject;
+			newCarGo.transform.parent = this.transform;
+			CarController newCar = newCarGo.AddComponent<CarController> ();
+			newCar.Init (playerID);
+			_carList.Add (playerID,newCar);
+			Logger.Highlight ("Player " + playerID + " Created; Bound to " + device.Name, "CAR MANAGER");
 		}
 		#endregion
 	}

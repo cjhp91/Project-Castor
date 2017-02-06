@@ -48,9 +48,9 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Gameplay\Controllers\CarController.cs" />
      <Compile Include="Assets\Scripts\Global\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Global\CastorInputManager.cs" />
      <Compile Include="Assets\Scripts\Global\GameModeManager.cs" />
      <Compile Include="Assets\Scripts\Global\InputLayout.cs" />
-     <Compile Include="Assets\Scripts\Global\InputManager.cs" />
      <Compile Include="Assets\Scripts\Global\Interfaces\IGameMode.cs" />
      <Compile Include="Assets\Scripts\Global\Interfaces\IInputHandler.cs" />
      <Compile Include="Assets\Scripts\Global\UIManager.cs" />
@@ -63,9 +63,8 @@
      <Compile Include="Assets\Scripts\Utility\DebugVector.cs" />
      <Compile Include="Assets\Scripts\Utility\Logger.cs" />
      <Compile Include="Assets\Scripts\Utility\Template.cs" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>G:/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
+     <None Include="Assets\Plugins\InControl\Readme\README.txt" />
+     <None Include="Assets\Plugins\JsonDotNet\link.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>G:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -81,12 +80,16 @@
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>G:/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>G:/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>G:/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>D:/Projects/Project-Castor/Project-Castor/Assets/Plugins/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{D1143107-E52F-36F7-CDD8-D44BCA0FE4F4}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

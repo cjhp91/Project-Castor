@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IInputHandler
+namespace CastorObsolete
 {
-	void ReceiveButtonDownInput (int player, int button);
-	void ReceiveButtonHoldInput (int player, int button);
-	void ReceiveButtonUpInput (int player, int button);
-	void ReceiveAxisInput (int player, int axis, int amount);
+	public interface IInputHandler
+	{
+		void ReceiveButtonDownInput (int player, int button);
+		void ReceiveButtonHoldInput (int player, int button);
+		void ReceiveButtonUpInput (int player, int button);
+		void ReceiveAxisInput (int player, int axis, float amount);
+	}
 }
