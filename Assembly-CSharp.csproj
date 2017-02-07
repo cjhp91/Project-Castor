@@ -48,9 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Gameplay\Controllers\CarController.cs" />
      <Compile Include="Assets\Scripts\Global\CameraController.cs" />
-     <Compile Include="Assets\Scripts\Global\CastorInputManager.cs" />
      <Compile Include="Assets\Scripts\Global\GameModeManager.cs" />
-     <Compile Include="Assets\Scripts\Global\InputLayout.cs" />
      <Compile Include="Assets\Scripts\Global\Interfaces\IGameMode.cs" />
      <Compile Include="Assets\Scripts\Global\Interfaces\IInputHandler.cs" />
      <Compile Include="Assets\Scripts\Global\UIManager.cs" />
